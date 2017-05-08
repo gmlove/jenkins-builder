@@ -61,16 +61,3 @@ def constructPipeline(opts, java.util.Map defopts=[]) {
 
 return this
 
-constructPipeline([
-    project: [
-        name: 'test-project',
-    ],
-    stages: [
-        [ type: 'b', options: [bp: 'bp - 1'] ],
-        [ type: 'd', options: [dp: 'dp - 1'] ],
-        [ type: 'd', options: [dp: 'dp - 2'] ],
-        [ type: 'd', options: [dp: 'dp - 3'] ],
-    ]
-])
-
-
