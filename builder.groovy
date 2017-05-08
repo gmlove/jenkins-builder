@@ -5,6 +5,7 @@ class Stage implements Serializable {
         name = opts.name
     }
 }
+
 class BStage extends Stage {
     String bp
 
@@ -21,6 +22,7 @@ class BStage extends Stage {
         }
     }
 }
+
 class DStage extends Stage {
     String dp
 
@@ -40,6 +42,7 @@ class DStage extends Stage {
 
 
 class Stages {
+
     def static stage(opts) {
         if(opts.type == 'b') {
             return new BStage(opts.options)
@@ -48,11 +51,10 @@ class Stages {
         }
     }
 
-
 }
 
 
-def constructPipeline(opts, java.util.Map defopts=[]) {
+def constructPipeline(opts, java.util.LinkedHashMap defopts=[]) {
     opts.putAll(defopts)
     for(stage in opts.stages) {
         Stages.stage(stage).call1(this)
