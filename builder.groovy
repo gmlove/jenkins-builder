@@ -40,6 +40,20 @@ class DStage extends Stage {
     }
 }
 
+class GStage extends Stage {
+    Closure runner
+    LinkedHashMap opts
+
+    DStage(java.util.LinkedHashMap opts) {
+        super(opts)
+        runner = opts.runner
+        this.opts = opts
+    }
+
+    def call1(env) {
+        runner.call(env, opts)
+    }
+}
 
 class Stages {
 
@@ -48,6 +62,8 @@ class Stages {
             return new BStage(opts.options)
         } else if(opts.type == 'd') {
             return new DStage(opts.options)
+        } else if(opts.type == 'g') {
+            return new GStage(opts.options)
         }
     }
 
