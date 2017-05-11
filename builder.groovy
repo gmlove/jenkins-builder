@@ -62,3 +62,39 @@ def constructPipeline(opts, java.util.LinkedHashMap defopts=[]) {
 
 return this
 
+
+'''
+
+// TO TEST:
+def m(a, b=1, c=2) { "a=$a, b=$b, c=$c" }
+
+stage('test') {
+    node('master') {
+        sh "echo m.a ${m(1)}"
+        sh "echo m.a.b " + m(a=1, b='b1')
+        sh "echo m.a.c " + m(a=1, c='c1')
+    }
+}
+
+builder = fileLoader.fromGit('builder.groovy', 'https://github.com/gmlove/jenkins-builder.git', 'master', null, 'master')
+
+def runner = {env, opts -> env.stage('test') {
+    env.sh 'echo customized stage'
+}}
+
+builder.constructPipeline([
+    project: [
+        name: 'test-project',
+    ],
+    stages: [
+        [ type: 'g', options: [runner: runner]],
+        [ type: 'b', options: [bp: 'bp - 1'] ],
+        [ type: 'd', options: [dp: 'dp - 1'] ],
+        [ type: 'd', options: [dp: 'dp - 2'] ],
+        [ type: 'd', options: [dp: 'dp - 3'] ],
+    ]
+])
+'''
+
+
+
